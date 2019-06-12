@@ -1,19 +1,18 @@
-# Disaster Response aided by Texts and Social Media
+# Analysis of text messages for Disaster Response 
 
 ## ETL pipeline | NLP Machine Learning pipeline | Flask Web App
 
 <br />
 
-> Example screen:
+> Example of message classification:
 
 <p align="center">
-  <img src="k-means.png" width="512" alt="screen-shot" />
-  <img src="customer_segmentation.png" width="512" alt="screen-shot" />
+  <img src="docs/example-message.png" width="512" alt="screen-shot" />
 </p>
 
 ## Business motivation
 
-
+    
 ## Data Science motivation
 
 
