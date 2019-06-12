@@ -11,6 +11,7 @@
   <img src="docs/example-message.png" width="512" alt="screen-shot" />
 </p>
 
+---
 
 This project is an exercise in natural language processing and machine learning pipelines, using a dataset which contains real messages that were sent during disaster events. The objective is to categorize the underlying events so that the messages can be redirected to an appropriate disaster relief agency.
 
