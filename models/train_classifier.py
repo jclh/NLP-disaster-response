@@ -131,6 +131,22 @@ def build_model():
     return model
 
 
+def best_params(model):
+    """Print parameter setting that gave GridSearchCV best results on the hold out data.
+    
+    Args: 
+        model (sklearn.pipeline): Fitted GridSearchCV pipeline.
+        
+    """
+    print('  GridSearchCV best results:')
+    max_len = max([len(key) for key in model.best_params_.keys()])
+    string = '    {:<' + str(max_len + 1) + '}{:>7}'
+    for key, value in model.best_params_.items():
+        print(string.format(key + ':', value))
+    
+    return None            
+
+
 def evaluate_model(model, X_test, Y_test, category_names):
     """Run test data through text processing and machine learning
     pipeline for prediction. And print results of scikit-learn's 
@@ -159,7 +175,7 @@ def evaluate_model(model, X_test, Y_test, category_names):
     
    
 def save_model(model, model_filepath):
-    """Re-encode string of a dollar amount to float.
+    """Save fitted model in a pickle file.
     
     Args: 
         model (sklearn.pipeline): Fitted scikit-learn pipeline.
@@ -169,25 +185,28 @@ def save_model(model, model_filepath):
         None
         
     """
-    joblib.dump(model, model_filepath) 
+    # Save best classifier out of GridSearchCV()
+    joblib.dump(model.best_estimator_, model_filepath) 
 
     return None
+
 
 def main():
     if len(sys.argv) == 3:
         database_filepath, model_filepath = sys.argv[1:]
         print('Loading data...\n    DATABASE: {}'.format(database_filepath))
         X, Y, category_names = load_data(database_filepath)
-        X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
+        X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.99)
         
         print('Building model...')
         model = build_model()
         
         print('Training model...')
         model.fit(X_train, Y_train)
+        best_params(model)
         
         print('Evaluating model...')
-        evaluate_model(model, X_test, Y_test, category_names)
+        #evaluate_model(model, X_test, Y_test, category_names)
 
         print('Saving model...\n    MODEL: {}'.format(model_filepath))
         save_model(model, model_filepath)
